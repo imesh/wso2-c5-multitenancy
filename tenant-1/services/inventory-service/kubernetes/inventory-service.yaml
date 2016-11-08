@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: List
+items:
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: inventory
+    namespace: tenant-1
+  spec:
+    template:
+      metadata:
+        labels:
+          app: inventory
+      spec:
+        containers:
+        - image: inventory-service:latest
+          imagePullPolicy: IfNotPresent
+          name: inventory
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+-
+  kind: Service
+  apiVersion: v1
+  metadata:
+    labels:
+      app: inventory
+    name: inventory
+    namespace: tenant-1
+  spec:
+    type: LoadBalancer
+    ports:
+    - port: 8080
+      targetPort: 8080
+    selector:
+      app: inventory
+-
+  apiVersion: extensions/v1beta1
+  kind: Ingress
+  metadata:
+    name: inventory
+    namespace: tenant-1
+  spec:
+    rules:
+    - host: kubernetes-nginx
+      http:
+        paths:
+        - path: /inventory
+          backend:
+            serviceName: inventory
+            servicePort: 8080
+  

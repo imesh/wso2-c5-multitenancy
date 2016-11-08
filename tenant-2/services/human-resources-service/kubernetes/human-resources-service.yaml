@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: List
+items:
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: human-resources
+    namespace: tenant-2
+  spec:
+    template:
+      metadata:
+        labels:
+          app: human-resources
+      spec:
+        containers:
+        - image: human-resources-service:latest
+          imagePullPolicy: IfNotPresent
+          name: human-resources
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+-
+  kind: Service
+  apiVersion: v1
+  metadata:
+    labels:
+      app: human-resources
+    name: human-resources
+    namespace: tenant-2
+  spec:
+    type: LoadBalancer
+    ports:
+    - port: 8080
+      targetPort: 8080
+    selector:
+      app: human-resources
+-
+  apiVersion: extensions/v1beta1
+  kind: Ingress
+  metadata:
+    name: human-resources
+    namespace: tenant-2
+  spec:
+    rules:
+    - host: kubernetes-nginx
+      http:
+        paths:
+        - path: /human-resources
+          backend:
+            serviceName: human-resources
+            servicePort: 8080

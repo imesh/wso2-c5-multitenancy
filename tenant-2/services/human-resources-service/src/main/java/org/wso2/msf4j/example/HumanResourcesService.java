@@ -16,7 +16,7 @@
 
 package org.wso2.msf4j.example;
 
-import org.wso2.msf4j.example.domain.Product;
+import org.wso2.msf4j.example.domain.Employee;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -24,24 +24,24 @@ import javax.ws.rs.Produces;
 import java.util.List;
 
 /**
- * Inventory service class.
+ * Human resources service class.
  */
-@Path("/inventory")
-public class InventoryService {
+@Path("/human-resources")
+public class HumanResourcesService {
 
     @GET
     @Path("/")
     @Produces("application/json")
-    public InventoryServiceInfo getApiMetadata() {
+    public ServiceInfo getApiMetadata() {
         System.out.println("---> API Resource GET / invoked");
-        return InventoryServiceInfo.getInstance();
+        return ServiceInfo.getInstance();
     }
 
     @GET
-    @Path("/products")
+    @Path("/employees")
     @Produces("application/json")
-    public List<Product> getProducts() {
-        System.out.println("---> API Resource GET /products invoked");
-        return Database.getInstance().getProducts();
+    public List<Employee> getEmployees() {
+        System.out.println("---> API Resource GET /employees invoked");
+        return Database.getInstance().getEmployees();
     }
 }
