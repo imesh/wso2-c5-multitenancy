@@ -6,10 +6,10 @@ demonstrating how multitenancy works on Kubernetes for WSO2 middleware.
 
 ## How to run
 
-1. Install a Kubernetes 1.4 cluster on your local machine by following 
-(this)[https://github.com/pires/kubernetes-vagrant-coreos-cluster.git].
+1. Install a Kubernetes 1.4 cluster on your local machine by using 
+[this](https://github.com/pires/kubernetes-vagrant-coreos-cluster.git) git repository.
 
-2. Once the installation is completed execute the following command to
+2. Once the installation is completed execute the following command to 
 verify the Kubernetes cluster status:
 
     ```
@@ -29,30 +29,30 @@ verify the Kubernetes cluster status:
     
 4. Create service docker images of each tenant:
 
-   ```
-   cd [wso2-c5-multitenancy]
-   cd tenant-1/services/inventory-service/
-   ./build.sh
-   ./run.sh
-   cd -
+    ```
+    cd [wso2-c5-multitenancy]
+    cd tenant-1/services/inventory-service/
+    ./build.sh
+    ./run.sh
+    cd -
    
-   cd tenant-2/services/human-resources-service/
-   ./build.sh
-   ./run.sh
-   ```
+    cd tenant-2/services/human-resources-service/
+    ./build.sh
+    ./run.sh
+    ```
    
 5. Save docker images to the disk:
  
-   ```
-   cd [wso2-c5-multitenancy]
-   cd tenant-1/services/inventory-service/
-   ./save.sh
+    ```
+    cd [wso2-c5-multitenancy]
+    cd tenant-1/services/inventory-service/
+    ./save.sh
    
-   cd tenant-2/services/human-resources-service/
-   ./save.sh
-   ```
+    cd tenant-2/services/human-resources-service/
+    ./save.sh
+    ```
    
-6. Now copy above docker image files to the Kubernetes hosts and execute
+6. Now copy above docker image files to the Kubernetes hosts and execute 
 the below command in each host for loading them to the local docker registries:
 
     ```
@@ -60,7 +60,7 @@ the below command in each host for loading them to the local docker registries:
     docker load < human-resources-service.docker.image
     ```
     
- 7. Now deploy above services in Kubernetes by executing below commands:
+7. Now deploy above services in Kubernetes by executing below commands:
  
     ```
     cd [wso2-c5-multitenancy]
