@@ -1,0 +1,7 @@
+# Ignore unnecessary files
+target
+.classpath
+.settings
+.project
+*.i??
+.idea
