@@ -1,16 +1,12 @@
 # WSO2 Carbon 5 Multitenancy
 
-In Carbon 5, multitenancy is provided by the container cluster manager.
-This repository contains a set of sample Carbon applications used for 
-demonstrating how multitenancy works on Kubernetes for WSO2 middleware.
+In Carbon 5, multitenancy is provided by the container cluster manager. This repository contains a set of sample Carbon applications used for demonstrating how multitenancy works on Kubernetes for WSO2 middleware.
 
 ## How to run
 
-1. Install a Kubernetes 1.4 cluster on your local machine by using 
-[this](https://github.com/pires/kubernetes-vagrant-coreos-cluster.git) git repository.
+1. Install a Kubernetes 1.4 cluster on your local machine by using [this](https://github.com/pires/kubernetes-vagrant-coreos-cluster.git) git repository.
 
-2. Once the installation is completed execute the following command to 
-verify the Kubernetes cluster status:
+2. Once the installation is completed execute the following command to verify the Kubernetes cluster status:
 
     ```
     kubectl cluster-info
@@ -26,8 +22,17 @@ verify the Kubernetes cluster status:
     kubectl create namespace tenant-1
     kubectl create namespace tenant-2
     ```
+
+4. Execute the below commands to create the Nginx ingress controller:
     
-4. Create service docker images of each tenant:
+    ```
+    cd [wso2-c5-multitenancy]
+    kubectl create -f common/kubernetes/nginx-ingress-controller.yaml
+    ```
+
+    This will create an Nginx pod and expose port 80 from the Kubernetes node. In addition an ingress controller will get started for updating Nginx configuration according to the ingress definitions.
+
+5. Create service docker images of each tenant:
 
     ```
     cd [wso2-c5-multitenancy]
@@ -41,7 +46,7 @@ verify the Kubernetes cluster status:
     ./run.sh
     ```
    
-5. Save docker images to the disk:
+6. Save docker images to the disk:
  
     ```
     cd [wso2-c5-multitenancy]
@@ -52,15 +57,14 @@ verify the Kubernetes cluster status:
     ./save.sh
     ```
    
-6. Now copy above docker image files to the Kubernetes hosts and execute 
-the below command in each host for loading them to the local docker registries:
+7. Copy above docker image files to the Kubernetes hosts and execute the below command in each host for loading them to the local docker registries:
 
     ```
     docker load < inventory-service.docker.image
     docker load < human-resources-service.docker.image
     ```
     
-7. Now deploy above services in Kubernetes by executing below commands:
+8. Now deploy above services in Kubernetes by executing below commands:
  
     ```
     cd [wso2-c5-multitenancy]
