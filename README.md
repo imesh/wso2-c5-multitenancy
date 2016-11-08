@@ -39,6 +39,10 @@ In Carbon 5, multitenancy is provided by the container cluster manager. This rep
     cd tenant-1/services/inventory-service/
     ./build.sh
     cd -
+    
+    cd tenant-1/services/finance-service/
+    ./build.sh
+    cd -
    
     cd tenant-2/services/human-resources-service/
     ./build.sh
@@ -57,6 +61,15 @@ In Carbon 5, multitenancy is provided by the container cluster manager. This rep
     2016-11-08 10:02:00 INFO  MicroservicesRunner:163 - Microservices server started in 462ms
     
     cd -
+    cd tenant-1/services/finance-service/
+    ./run.sh
+    2016-11-08 11:02:35 INFO  MicroservicesRegistry:55 - Added microservice: org.wso2.msf4j.example.FinanceService@2ef1e4fa
+    2016-11-08 11:02:35 INFO  MicroservicesRegistry:55 - Added microservice: org.wso2.msf4j.internal.swagger.SwaggerDefinitionService@5ccd43c2
+    2016-11-08 11:02:35 INFO  NettyListener:68 - Starting Netty Http Transport Listener
+    2016-11-08 11:02:35 INFO  NettyListener:110 - Netty Listener starting on port 8080
+    2016-11-08 11:02:35 INFO  MicroservicesRunner:163 - Microservices server started in 451ms 
+ 
+    cd -
     cd tenant-2/services/human-resources-service/
     ./run.sh
     2016-11-08 10:01:35 INFO  MicroservicesRegistry:55 - Added microservice: org.wso2.msf4j.example.HumanResourcesService@2ef1e4fa
@@ -73,6 +86,11 @@ In Carbon 5, multitenancy is provided by the container cluster manager. This rep
     cd tenant-1/services/inventory-service/
     ./save.sh
    
+    cd - 
+    cd tenant-1/services/finance-service/
+    ./save.sh
+        
+    cd -
     cd tenant-2/services/human-resources-service/
     ./save.sh
     ```
@@ -81,6 +99,7 @@ In Carbon 5, multitenancy is provided by the container cluster manager. This rep
 
     ```
     docker load < inventory-service.docker.image
+    docker load < finance-service.docker.image
     docker load < human-resources-service.docker.image
     ```
     
@@ -91,24 +110,26 @@ In Carbon 5, multitenancy is provided by the container cluster manager. This rep
     ```
     cd [wso2-c5-multitenancy]
     kubectl create -f tenant-1/services/inventory-service/kubernetes/inventory-service.yaml
+    kubectl create -f tenant-1/services/finance-service/kubernetes/finance-service.yaml
     kubectl create -f tenant-2/services/human-resources-service/kubernetes/human-resources-service.yaml
     ```
     
     Above commands will create a deployment, service and ingress definition for each service. Please refer the service yaml files for details.
     
-9. Set an /etc/hosts entry for pointing 'kubernetes-nginx' host name to kubernetes node-01 ip address:
+9. Add following /etc/hosts entries pointing to kubernetes node-01 ip address:
 
     ```
     vi /etc/hosts/
-    # Add following line
-    172.17.8.102 kubernetes-nginx
+    # Add following lines
+    172.17.8.102 tenant-1
+    172.17.8.102 tenant-2
     ```
     
 10. Verify deployment using following HTTP requests:
 
     ```
-    curl http://kubernetes-nginx/inventory
-    {"version":"v1.0","resources":["/inventory"]}
+    curl http://tenant-1/inventory
+     {"version":"v1.0","resources":["/inventory"]}
     
     curl http://kubernetes-nginx/inventory/products
     [{"id":"Product 1","price":110.0,"qtyOnHand":10000},
@@ -123,8 +144,24 @@ In Carbon 5, multitenancy is provided by the container cluster manager. This rep
      {"id":"Product 10","price":100.0,"qtyOnHand":100000},
      {"id":"Product 11","price":110.0,"qtyOnHand":120000}]
     
-    curl http://kubernetes-nginx/human-resources/
-    {"version":"v1.0","resources":["/employees"]}
+    curl http://tenant-1/finance/
+     {"version":"v1.0","resources":["/finance"]}
+    
+    curl http://tenant-1/finance/orders
+    [{"id":"Order 1","price":110.0},
+     {"id":"Order 2","price":120.0},
+     {"id":"Order 3","price":130.0},
+     {"id":"Order 4","price":140.0},
+     {"id":"Order 5","price":150.0},
+     {"id":"Order 6","price":160.0},
+     {"id":"Order 7","price":170.0},
+     {"id":"Order 8","price":180.0},
+     {"id":"Order 9","price":190.0},
+     {"id":"Order 10","price":100.0},
+     {"id":"Order 11","price":110.0}]
+    
+    curl http://tenant-2/human-resources/
+     {"version":"v1.0","resources":["/employees"]}
         
     curl http://kubernetes-nginx/human-resources/employees
     [{"name":"Employee 1","age":21},
@@ -138,3 +175,5 @@ In Carbon 5, multitenancy is provided by the container cluster manager. This rep
      {"name":"Employee 9","age":29},
      {"name":"Employee 10","age":30}]
     ```
+    
+    In the above HTTP requests note the hostname and context path. The Nginx load balancer identifies the tenant using the hostname and uses the context path for forwarding the requests to the required Kubernetes service. 
