@@ -111,11 +111,30 @@ In Carbon 5, multitenancy is provided by the container cluster manager. This rep
     {"version":"v1.0","resources":["/inventory"]}
     
     curl http://kubernetes-nginx/inventory/products
-    [{"id":"Product 1","price":110.0,"qtyOnHand":10000},{"id":"Product 2","price":120.0,"qtyOnHand":20000},{"id":"Product 3","price":130.0,"qtyOnHand":30000},{"id":"Product 4","price":140.0,"qtyOnHand":40000},{"id":"Product 5","price":150.0,"qtyOnHand":50000},{"id":"Product 6","price":160.0,"qtyOnHand":60000},{"id":"Product 7","price":170.0,"qtyOnHand":70000},{"id":"Product 8","price":180.0,"qtyOnHand":80000},{"id":"Product 9","price":190.0,"qtyOnHand":90000},{"id":"Product 10","price":100.0,"qtyOnHand":100000},{"id":"Product 11","price":110.0,"qtyOnHand":120000}]
+    [{"id":"Product 1","price":110.0,"qtyOnHand":10000},
+     {"id":"Product 2","price":120.0,"qtyOnHand":20000},
+     {"id":"Product 3","price":130.0,"qtyOnHand":30000},
+     {"id":"Product 4","price":140.0,"qtyOnHand":40000},
+     {"id":"Product 5","price":150.0,"qtyOnHand":50000},
+     {"id":"Product 6","price":160.0,"qtyOnHand":60000},
+     {"id":"Product 7","price":170.0,"qtyOnHand":70000},
+     {"id":"Product 8","price":180.0,"qtyOnHand":80000},
+     {"id":"Product 9","price":190.0,"qtyOnHand":90000},
+     {"id":"Product 10","price":100.0,"qtyOnHand":100000},
+     {"id":"Product 11","price":110.0,"qtyOnHand":120000}]
     
     curl http://kubernetes-nginx/human-resources/
     {"version":"v1.0","resources":["/employees"]}
         
     curl http://kubernetes-nginx/human-resources/employees
-    [{"name":"Employee 1","age":21},{"name":"Employee 2","age":22},{"name":"Employee 3","age":23},{"name":"Employee 4","age":24},{"name":"Employee 5","age":25},{"name":"Employee 6","age":26},{"name":"Employee 7","age":27},{"name":"Employee 8","age":28},{"name":"Employee 9","age":29},{"name":"Employee 10","age":30}]
+    [{"name":"Employee 1","age":21},
+     {"name":"Employee 2","age":22},
+     {"name":"Employee 3","age":23},
+     {"name":"Employee 4","age":24},
+     {"name":"Employee 5","age":25},
+     {"name":"Employee 6","age":26},
+     {"name":"Employee 7","age":27},
+     {"name":"Employee 8","age":28},
+     {"name":"Employee 9","age":29},
+     {"name":"Employee 10","age":30}]
     ```
