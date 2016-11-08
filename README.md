@@ -38,12 +38,12 @@ In Carbon 5, multitenancy is provided by the container cluster manager. This rep
     cd [wso2-c5-multitenancy]
     cd tenant-1/services/inventory-service/
     ./build.sh
-    cd -
     
+    cd -
     cd tenant-1/services/finance-service/
     ./build.sh
+    
     cd -
-   
     cd tenant-2/services/human-resources-service/
     ./build.sh
     ```

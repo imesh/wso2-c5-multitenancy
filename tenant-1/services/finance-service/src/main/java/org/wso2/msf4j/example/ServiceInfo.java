@@ -16,7 +16,7 @@ public class ServiceInfo {
     private ServiceInfo() {
         version = "v1.0";
         resources = new ArrayList<>();
-        resources.add("/finance");
+        resources.add("/orders");
     }
 
     public static ServiceInfo getInstance() {

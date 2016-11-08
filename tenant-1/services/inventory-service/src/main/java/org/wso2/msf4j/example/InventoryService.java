@@ -32,9 +32,9 @@ public class InventoryService {
     @GET
     @Path("/")
     @Produces("application/json")
-    public InventoryServiceInfo getApiMetadata() {
+    public ServiceInfo getApiMetadata() {
         System.out.println("---> API Resource GET / invoked");
-        return InventoryServiceInfo.getInstance();
+        return ServiceInfo.getInstance();
     }
 
     @GET

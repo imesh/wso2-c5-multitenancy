@@ -6,22 +6,22 @@ import java.util.List;
 /**
  * Inventory API information definition.
  */
-public class InventoryServiceInfo {
+public class ServiceInfo {
 
-    private static InventoryServiceInfo instance;
+    private static ServiceInfo instance;
 
     private final String version;
     private final List<String> resources;
 
-    private InventoryServiceInfo() {
+    private ServiceInfo() {
         version = "v1.0";
         resources = new ArrayList<>();
-        resources.add("/inventory");
+        resources.add("/products");
     }
 
-    public static InventoryServiceInfo getInstance() {
+    public static ServiceInfo getInstance() {
         if(instance == null) {
-            instance = new InventoryServiceInfo();
+            instance = new ServiceInfo();
         }
         return instance;
     }
