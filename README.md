@@ -77,26 +77,30 @@ In Carbon 5, multitenancy is provided by the container cluster manager. This rep
     ./save.sh
     ```
    
-7. Copy above docker image files to the Kubernetes hosts and execute the below command in each host for loading them to the local docker registries:
+7. Copy above docker image files to the Kubernetes node-01 and execute the below command for loading the images to the local docker registry:
 
     ```
     docker load < inventory-service.docker.image
     docker load < human-resources-service.docker.image
     ```
     
+    This process can be simplified by copying above files to the Kubernetes vagrant folder and accessing them in node-01 via "/vagrant".
+    
 8. Now deploy above services in Kubernetes by executing below commands:
  
     ```
     cd [wso2-c5-multitenancy]
-    kubectl create -f tenant-1/services/inventory-service/kubernetes/
-    kubectl create -f tenant-2/services/human-resources-service/kubernetes/
+    kubectl create -f tenant-1/services/inventory-service/kubernetes/inventory-service.yaml
+    kubectl create -f tenant-2/services/human-resources-service/kubernetes/human-resources-service.yaml
     ```
+    
+    Above commands will create a deployment, service and ingress definition for each service. Please refer the service yaml files for details.
     
 9. Set an /etc/hosts entry for pointing 'kubernetes-nginx' host name to kubernetes node-01 ip address:
 
     ```
     vi /etc/hosts/
-    
+    # Add following line
     172.17.8.102 kubernetes-nginx
     ```
     
