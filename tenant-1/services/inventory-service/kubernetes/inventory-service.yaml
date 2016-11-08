@@ -43,7 +43,7 @@ items:
     namespace: tenant-1
   spec:
     rules:
-    - host: kubernetes-nginx
+    - host: tenant-1
       http:
         paths:
         - path: /inventory
